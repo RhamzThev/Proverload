@@ -12,20 +12,29 @@ const TaskSchema = {
   primaryKey: "_id",
 };
 
-async function create(name, properties) {
-    const realm = await Realm.open({
+async function create(schema, properties) {
+  const realm = await Realm.open({
     path: "myrealm",
-    schema: [TaskSchema],
+    schema: [schema],
   });
 
+  let name = schema["name"]
   let anObject;
 
   realm.write(() => {
     anObject = realm.create(name, properties);
   });
   realm.close();
-  console.log()
+  console.log(name + " Object has been created.")
 }
+
+create(TaskSchema, {
+  _id: 18,
+  name: "go grocery shopping",
+  status: "Open",
+}).catch((error) => {
+  console.log(`An error occurred: ${error}`);
+});
 
 class App extends Component {
   constructor(props) {
