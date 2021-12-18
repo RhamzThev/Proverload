@@ -28,13 +28,7 @@ async function create(schema, properties) {
   console.log(name + " Object has been created.")
 }
 
-create(TaskSchema, {
-  _id: 18,
-  name: "go grocery shopping",
-  status: "Open",
-}).catch((error) => {
-  console.log(`An error occurred: ${error}`);
-});
+
 
 class App extends Component {
   constructor(props) {
