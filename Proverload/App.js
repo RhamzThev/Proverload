@@ -1,135 +1,156 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Modal, Button, StyleSheet, TextInput } from 'react-native';
 import Realm from "realm";
+import {Day} from './db/Day.js';
+const BSON = require('bson');
 
-const TaskSchema = {
-  name: "Task",
-  properties: {
-    _id: "int",
-    name: "string",
-    status: "string?",
+const styles = StyleSheet.create({
+  centerView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  primaryKey: "_id",
-};
-
-async function create(schema, properties) {
-  const realm = await Realm.open({
-    path: "myrealm",
-    schema: [schema],
-  });
-
-  let name = schema["name"]
-  let anObject;
-
-  realm.write(() => {
-    anObject = realm.create(name, properties);
-  });
-  realm.close();
-  console.log(name + " Object has been created.")
-}
-
-
+  modalView: {
+    margin: 25,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "black",
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+})
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      realm: null,
+      show: false
+    };
+    // Handle Days
+    this.createDay = this.createDay.bind(this);
   }
 
-  render() {
+  componentDidMount(){
+    Realm.open({
+      deleteRealmIfMigrationNeeded: true,
+      schema: [Day],
+    })
+    .then(realm => this.setState({realm: realm}))
+  }
 
+  componentWillUnmount() {
+    const realm = this.state.realm;
+    if (realm !== null && !realm.isClosed) {
+      realm.close();
+    }
+  }
+
+  // FOR EASE PURPOSES
+  deleteRealms = () => {
+    const realm = this.state.realm;
+
+    realm.write(() => {
+      // Delete all objects from the realm.
+      realm.deleteAll();
+    });
+
+  }
+
+  // MODAL
+  modalShow = () => this.setState({show: true})
+
+  modalClose = () => this.setState({show: false})
+
+  // CRUD OPERATIONS FOR DAY
+  // CREATE
+  createDay = (event) => {
+    const name = event.nativeEvent.text;
+    const realm = this.state.realm;
+    const _id = new BSON.ObjectId();
+
+    realm.write(() => {
+      realm.create("Day", {
+        _id: _id,
+        name: name,
+      })
+    })
+
+    console.log(name + " has been created.")
+    this.modalClose();
+  }
+  // READ
+  readDays = () => {
+    const realm = this.state.realm;
+    if(realm != null) {
+      return realm.objects("Day");
+    }
+  }
+
+  // UPDATE
+
+  // DELETE
+
+
+  // FOR RENDER
+
+  displayDays = () => {
+    const daysMap = this.readDays();
+    if (daysMap != null) {
+      const days = Array.from(daysMap);
+      return days.map(day => (<Text>{day.toString}</Text>));
+    }
+  }
+
+
+  render() {
     return (
       <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
-        }}>
-        <Text>Hello World</Text>
+        style={styles.centerView}>
+        {/* CREATED DAYS */}
+
+        {this.displayDays()}
+
+        {/* MODAL AND BUTTONS */}
+
+        <Modal
+          visible={this.state.show}
+          onRequestClose={this.modalClose}>
+          <View style={styles.centerView}>
+            <View style={styles.modalView}>
+              <Text>Day Name:</Text>
+              <TextInput 
+                onSubmitEditing={this.createDay}/>
+              <Button
+                style={styles.button}
+                onPress={this.modalClose}
+                title="Close" />     
+            </View>
+          </View>
+        </Modal>
+        <Button
+          style={styles.button}
+          onPress={this.modalShow}
+          title="New Day" />
+        <Button
+          style={styles.button}
+          onPress={this.deleteRealms}
+          title="DELETE REALMS" />
       </View>
     )
   }
 }
 
 export default App;
-
-// async function quickStart() {
-//   const realm = await Realm.open({
-//     path: "myrealm",
-//     schema: [TaskSchema],
-//   });
-//   // Add a couple of Tasks in a single, atomic transaction
-//   let task1, task2;
-//   realm.write(() => {
-//     task1 = realm.create("Task", {
-//       _id: 1,
-//       name: "go grocery shopping",
-//       status: "Open",
-//     });
-//     task2 = realm.create("Task", {
-//       _id: 2,
-//       name: "go exercise",
-//       status: "Open",
-//     });
-//     console.log(`created two tasks: ${task1.name} & ${task2.name}`);
-//   });
-//   // use task1 and task2
-//   // query realm for all instances of the "Task" type.
-//   const tasks = realm.objects("Task");
-//   console.log(`The lists of tasks are: ${tasks.map((task) => task.name)}`);
-//   // filter for all tasks with a status of "Open"
-//   const openTasks = tasks.filtered("status = 'Open'");
-//   console.log(
-//     `The lists of open tasks are: ${openTasks.map(
-//       (openTask) => openTask.name
-//     )}`
-//   );
-//   // Sort tasks by name in ascending order
-//   const tasksByName = tasks.sorted("name");
-//   console.log(
-//     `The lists of tasks in alphabetical order are: ${tasksByName.map(
-//       (taskByName) => taskByName.name
-//     )}`
-//   );
-//   // Define the collection notification listener
-//   function listener(tasks, changes) {
-//     // Update UI in response to deleted objects
-//     changes.deletions.forEach((index) => {
-//       // Deleted objects cannot be accessed directly,
-//       // but we can update a UI list, etc. knowing the index.
-//       console.log(`A task was deleted at the ${index} index`);
-//     });
-//     // Update UI in response to inserted objects
-//     changes.insertions.forEach((index) => {
-//       let insertedTasks = tasks[index];
-//       console.log(
-//         `insertedTasks: ${JSON.stringify(insertedTasks, null, 2)}`
-//       );
-//       // ...
-//     });
-//     // Update UI in response to modified objects
-//     // `newModifications` contains object indexes from after they were modified
-//     changes.newModifications.forEach((index) => {
-//       let modifiedTask = tasks[index];
-//       console.log(`modifiedTask: ${JSON.stringify(modifiedTask, null, 2)}`);
-//       // ...
-//     });
-//   }
-//   // Observe collection notifications.
-//   tasks.addListener(listener);
-//   realm.write(() => {
-//     task1.status = "InProgress";
-//   });
-//   realm.write(() => {
-//     // Delete the task from the realm.
-//     realm.delete(task1);
-//     // Discard the reference.
-//     task1 = null;
-//   });
-//   // Remember to close the realm
-//   realm.close();
-// }
-
-// quickStart().catch((error) => {
-//   console.log(`An error occurred: ${error}`);
-// });

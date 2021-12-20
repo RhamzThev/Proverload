@@ -10,8 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "mongodb": "^4.2.2",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-get-random-values": "^1.7.1",
+    "react-native-web": "^0.17.5",
     "realm": "^10.10.1"
   },
   "devDependencies": {
