@@ -1,8 +1,6 @@
-
-export class Day {
-    static ID = 0;
+export class Workout {
     static schema = {
-        name: "Day",
+        name: "Workout",
         properties: {
             _id: "objectId",
             name: "string",
@@ -11,6 +9,6 @@ export class Day {
     }
 
     get toString() {
-        return `Day: _id = ${this._id}, name = ${this.name}`
+        return `Workout: _id = ${this._id}, name = ${this.name}`
     }
 }

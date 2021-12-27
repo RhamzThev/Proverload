@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
 import { Text, View, Modal, Button, StyleSheet, TextInput } from 'react-native';
 import Realm from "realm";
-import {Day} from './db/Day.js';
+import {Workout} from './db/Workout.js';
 const BSON = require('bson');
 
 const styles = StyleSheet.create({
@@ -39,14 +40,14 @@ class App extends Component {
       realm: null,
       show: false
     };
-    // Handle Days
-    this.createDay = this.createDay.bind(this);
+    // Handle Workouts
+    this.createWorkout = this.createWorkout.bind(this);
   }
 
   componentDidMount(){
     Realm.open({
       deleteRealmIfMigrationNeeded: true,
-      schema: [Day],
+      schema: [Workout],
     })
     .then(realm => this.setState({realm: realm}))
   }
@@ -74,15 +75,15 @@ class App extends Component {
 
   modalClose = () => this.setState({show: false})
 
-  // CRUD OPERATIONS FOR DAY
+  // CRUD OPERATIONS FOR WORKOUT
   // CREATE
-  createDay = (event) => {
+  createWorkout = (event) => {
     const name = event.nativeEvent.text;
     const realm = this.state.realm;
     const _id = new BSON.ObjectId();
 
     realm.write(() => {
-      realm.create("Day", {
+      realm.create("Workout", {
         _id: _id,
         name: name,
       })
@@ -92,10 +93,10 @@ class App extends Component {
     this.modalClose();
   }
   // READ
-  readDays = () => {
+  readWorkouts = () => {
     const realm = this.state.realm;
     if(realm != null) {
-      return realm.objects("Day");
+      return realm.objects("Workout");
     }
   }
 
@@ -106,11 +107,11 @@ class App extends Component {
 
   // FOR RENDER
 
-  displayDays = () => {
-    const daysMap = this.readDays();
-    if (daysMap != null) {
-      const days = Array.from(daysMap);
-      return days.map(day => (<Text>{day.toString}</Text>));
+  displayWorkouts = () => {
+    const workoutsMap = this.readWorkouts();
+    if (workoutsMap != null) {
+      const workouts = Array.from(workoutsMap);
+      return workouts.map(workout => (<Text>{workout.toString}</Text>));
     }
   }
 
@@ -119,9 +120,9 @@ class App extends Component {
     return (
       <View
         style={styles.centerView}>
-        {/* CREATED DAYS */}
+        {/* CREATED WORKOUTS */}
 
-        {this.displayDays()}
+        {this.displayWorkouts()}
 
         {/* MODAL AND BUTTONS */}
 
@@ -130,9 +131,9 @@ class App extends Component {
           onRequestClose={this.modalClose}>
           <View style={styles.centerView}>
             <View style={styles.modalView}>
-              <Text>Day Name:</Text>
+              <Text>Workout Name:</Text>
               <TextInput 
-                onSubmitEditing={this.createDay}/>
+                onSubmitEditing={this.createWorkout}/>
               <Button
                 style={styles.button}
                 onPress={this.modalClose}
@@ -143,7 +144,7 @@ class App extends Component {
         <Button
           style={styles.button}
           onPress={this.modalShow}
-          title="New Day" />
+          title="New Workout" />
         <Button
           style={styles.button}
           onPress={this.deleteRealms}
