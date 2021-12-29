@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button  } from 'react-native';
-
+// for workout
 function HomePage({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
