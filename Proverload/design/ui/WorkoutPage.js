@@ -20,14 +20,28 @@ export default class WorkoutPage extends Component {
 
     displayCircuits = () => {
         const workoutId = BSON.ObjectId(this.props.route.params.workoutId);
-        var circuits = CRUD.readData('Circuit', 'workoutId == $0', workoutId);
+        const circuits = CRUD.readData('Circuit', 'workoutId == $0', workoutId);
 
         if(circuits) {
+
+            
+
+            const exercise = (id) => {
+                const exerciseID = CRUD.readData('Proverload', 'circuitId == $0', BSON.ObjectId(id))[0].exerciseID;
+                return CRUD.readData('Exercise', '_id == $0', BSON.ObjectId(exerciseID))[0].getName;
+            }
+
+            const amount = (id) => {
+                [sets, reps, weight] = CRUD.readData('Proverload', 'circuitId == $0', BSON.ObjectId(id))[0].proverload.split(' ');
+                return sets + " x " + reps + " @ " + weight + " lbs";
+            }
+
             this.setState({circuits: Array.from(circuits)
-            .map(c => (<Button
-                title={c.toString}
-                onPress={() => console.log("Circuit Button has been pressed!")} 
-                key={c.ID} />
+            .map(c => (
+                <View>
+                    <Text>{exercise(c.ID)} for</Text>
+                    <Text>{amount(c.ID)}</Text>                
+                </View>
             ))})
         }
     }

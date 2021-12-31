@@ -15,4 +15,8 @@ export default class Workout {
     get ID() {
         return `${this._id}`;
     }
+
+    get getName() {
+        return `${this.name}`;
+    }
 }

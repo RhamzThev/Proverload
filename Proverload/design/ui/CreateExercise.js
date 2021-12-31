@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import { View, Modal, Text, TextInput, Button  } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
 
 import CRUD from '../model/utils'
 const BSON = require('bson');
 
-import CreateProverload from './CreateProverload'
-
-export default class CreateCircuit extends Component {
+export default class CreateExercise extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         show: false,
       };
+      this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    handleSubmit = (event) => {
+        const name = event.nativeEvent.text;
+        const nameTaken = CRUD.readData('Exercise', 'name == $0', name).length;
+
+        if(nameTaken <= 0) {
+            CRUD.createData('Exercise', {_id: new BSON.ObjectId(), name: name,});
+            this.handleClose();
+        } else {
+            console.log("Exercise taken.")
+        }
     }
 
     handleShow = () => this.setState({show: true})
@@ -27,15 +37,13 @@ export default class CreateCircuit extends Component {
                     visible={this.state.show}
                     onRequestClose={this.handleClose}
                 >
-                    <CreateProverload 
-                        displayCircuits={this.props.displayCircuits}
-                        handleClose={this.handleClose}
-                        workoutId={this.props.workoutId}/>
+                    <Text>Exercise Name:</Text>
+                    <TextInput onSubmitEditing={this.handleSubmit} />
                 </Modal>
                 {/* BUTTON */}
                 <Button
                     onPress={this.handleShow}
-                    title="Create Circuit" 
+                    title="Create Exercise" 
                 />
             </View>
         )

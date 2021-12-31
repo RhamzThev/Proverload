@@ -8,4 +8,16 @@ export default class Exercise {
         primaryKey: '_id',
     }
 
+    get toString() {
+        return `Exercise: ${this.name}`;
+    }
+
+    get ID() {
+        return `${this._id}`;
+    }
+
+    get getName() {
+        return `${this.name}`;
+    }
+
 }

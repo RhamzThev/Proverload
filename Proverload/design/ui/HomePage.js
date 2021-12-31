@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button  } from 'react-native';
 
 import CreateWorkout from './CreateWorkout';
+import CreateExercise from './CreateExercise';
 
 import CRUD from '../model/utils'
 const BSON = require('bson');
@@ -19,7 +20,7 @@ export default class HomePage extends Component {
     }
 
     displayWorkouts = () => {
-        var workouts = CRUD.readData('Workout');
+        const workouts = CRUD.readData('Workout');
         if(workouts) {
             this.setState({workouts: Array.from(workouts)
             .map(w => (<Button
@@ -34,10 +35,11 @@ export default class HomePage extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 {this.state.workouts}
                 <CreateWorkout displayWorkouts={this.displayWorkouts}/>
+                <CreateExercise />
                 <Button title="Delete All" onPress={() => {
                     CRUD.deleteAllData();
                     this.displayWorkouts();
-                }}></Button>
+                }} />
             </View>
         );
     }
