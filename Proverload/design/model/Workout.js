@@ -1,6 +1,4 @@
-import Realm from "realm";
-
-export class Workout {
+export default class Workout {
     static schema = {
         name: "Workout",
         properties: {
@@ -10,18 +8,11 @@ export class Workout {
         primaryKey: '_id',
     }
 
-    // CREATE
-    static createWorkout(name) {
-        realm.write(() => {realm.create('Workout', {_id: new BSON.ObjectId(), name: name,})})
+    get toString() {
+        return `Workout: ${this.name}`;
     }
 
-    // READ
-    static readWorkouts() {
-        return realm.objects('Workout')
+    get ID() {
+        return `${this._id}`;
     }
-
-    // UPDATE
-
-    // DELETE    
-
 }

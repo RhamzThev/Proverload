@@ -1,6 +1,4 @@
-import Realm from "realm";
-
-export class Circuit {
+export default class Circuit {
     static schema = {
         name: "Circuit",
         properties: {
@@ -10,12 +8,11 @@ export class Circuit {
         primaryKey: '_id',
     }
 
-    // CREATE
+    get toString() {
+        return `Set - ID: ${this._id}, Workout ID: ${this.workoutId}`;
+    }
 
-    // READ
-
-    // UPDATE
-
-    // DELETE
-
+    get ID() {
+        return `${this._id}`;
+    }
 }

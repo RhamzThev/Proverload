@@ -14,11 +14,10 @@ export default class CreateWorkout extends React.Component {
     }
 
     handleSubmit = (event) => {
-        const name = event.nativeEvent.text;
-        CRUD.createData('Workout', {_id: new BSON.ObjectId(), name: name,});
+        const workoutId = BSON.ObjectId(this.props.workoutId);
+        CRUD.createData('Circuit', {_id: new BSON.ObjectId(), workoutId: workoutId,});
         
-        this.props.displayWorkouts();
-        this.handleClose();
+        this.props.displayCircuits();
     }
 
     handleShow = () => this.setState({show: true})
@@ -29,17 +28,17 @@ export default class CreateWorkout extends React.Component {
         return (
             <View>
                 {/* MODAL */}
-                <Modal
+                {/* <Modal
                     visible={this.state.show}
                     onRequestClose={this.handleClose}
                 >
                     <Text>Workout Name:</Text>
                     <TextInput onSubmitEditing={this.handleSubmit} />
-                </Modal>
+                </Modal> */}
                 {/* BUTTON */}
                 <Button
-                    onPress={this.handleShow}
-                    title="Create Workout" 
+                    onPress={this.handleSubmit}
+                    title="Create Circuit" 
                 />
             </View>
         )

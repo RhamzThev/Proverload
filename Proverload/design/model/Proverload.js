@@ -1,6 +1,4 @@
-import Realm from "realm";
-
-export class Proverload {
+export default class Proverload {
 
     static schema = {
         name: "Proverload",
@@ -12,13 +10,5 @@ export class Proverload {
         },
         primaryKey: '_id',
     }
-
-    // CREATE
-
-    // READ
-
-    // UPDATE
-
-    // DELETE
 
 }
