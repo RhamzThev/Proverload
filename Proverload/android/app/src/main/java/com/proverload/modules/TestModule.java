@@ -69,5 +69,6 @@ public class TestModule extends ReactContextBaseJavaModule {
         Log.i("Testing Delete...", deleteTests.toString());
 
         realm.close();
+        Realm.deleteRealm(configuration);
     }
 }
