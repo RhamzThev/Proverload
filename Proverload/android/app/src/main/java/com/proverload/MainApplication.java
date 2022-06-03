@@ -7,9 +7,13 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
+import com.proverload.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import io.realm.Realm;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -24,8 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+          // Packages that cannot be auto-linked yet can be added manually here, for example:
+          packages.add(new ProverloadPackage());
           return packages;
         }
 
@@ -35,14 +39,24 @@ public class MainApplication extends Application implements ReactApplication {
         }
       };
 
+  private final ReactNativeHost mNewArchitectureNativeHost =
+      new MainApplicationReactNativeHost(this);
+
   @Override
   public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+      return mNewArchitectureNativeHost;
+    } else {
+      return mReactNativeHost;
+    }
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
+      Realm.init(this);
+    // If you opted-in for the New Architecture, we enable the TurboModule system
+    ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
