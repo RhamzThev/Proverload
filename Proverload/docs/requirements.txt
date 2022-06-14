@@ -1,0 +1,53 @@
+Proverload
+
+Fitness application that'll keep track of the progressive overloading of exercises for users.
+
+There will be users who can sign in to select/create workouts. To sign in for the first time, users have to give username, password, along with fitness information (age, weight, height)
+(in a future release, this'll be used for tdee calculations for calorie intake.) For now, users can just edit them for progress sake. (Is it possible that the progress of the user will be tracked as well, 
+and possibly get a graph regarding it) ALL USER INFORMATION (besides username) CAN BE EDITED/UPDATED.
+
+The main feature of this website is the workout portion. 
+All of this will be separated into different programs (i.e. PPL, Upper/Lower, etc). 
+Each program will have Days (push, upper body, etc)
+For each day, there'll be a mix of sets of supersets
+*** IMPORTANT ***
+each set will contain a workout where as a superset will contain at least 2 workouts.
+after completion of each workout, you will be given an option of DNF or completion. 
+Based on that, the workout will updated based on predefined requirements*.  [* = (update weight, reps, or sets?)]
+*** END IMPORTANT ***
+
+So here's a run through of the workflow of this program:
+
+	- on the home page, there's a workout button. 
+	if there is not a defualt option, either pressing/holding the button will send you to the workout page.
+	if there is a default program, it'll redirect you to that program. holding it will send you to the workout page.
+
+	- in the workout page, you can select a program you want to do.
+	The workout page will automatically make the default workout the most prominent option.
+		- holding a program will give the option to select multiple/all. you mass delete workouts.
+		- Here, you can go to the settings for any program with the 3 dot thing.
+
+	- on the program page, you can select the day you're on. 
+	The program will automatically make the next sequential day from the previous day completed the more prominent option.
+		- same selection mechanism for days.
+		- settings icon on top-right for program
+
+		*** SETTINGS ***
+		- edit name
+		- delete program
+		*** END SETTINGS***
+
+	- on the day page, you can create new super(set). for each, it'll prompt you to have either add or select an excercise(s).
+
+	- now on the day page, you can now start the day. the app will display the current workout. 
+	If completed, select completed, then it'll move to the next sequential exercise.
+	If not completed, select DNF and it'll update current workout based on predefined requirements*.
+
+		*** SETTINGS ***
+		- edit name
+		- delete day
+		*** END SETTINGS***
+
+	- after the day is done, it'll give the user a completion popup, redirecting the user back to the program page.
+
+Another feature of the website is a calorie counter. There will be a feature where you can search for food, and add it to your calorie counter. 
