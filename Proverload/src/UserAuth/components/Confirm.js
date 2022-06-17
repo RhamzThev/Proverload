@@ -7,7 +7,7 @@ export default function Confirm(props) {
 
     return (
         <View>
-            <Text>***Overview***</Text>
+            <Text>***Overview ***</Text>
             <Text>Name: {props.state.name}</Text>
             <Text>Age: {props.state.age}</Text>
             <Text>Weight: {props.state.weight}</Text>

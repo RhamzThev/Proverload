@@ -7,11 +7,11 @@ const initialState = {
     height: 0,
 }
 
-const userCreationSlice = createSlice({
-    name: "userCreation",
+const UserAuthSlice = createSlice({
+    name: "UserAuth",
     initialState,
     reducers: {
-        confirm(state) {
+        createUser(state) {
             
         }
     }

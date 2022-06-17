@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {  } from './UserCreation/reducers'
+import {  } from './UserAuth/reducers'
 
 export default configureStore({
   reducer: { 
-    userCreation: UserCreation 
+    UserAuth: UserAuth 
   }
 })

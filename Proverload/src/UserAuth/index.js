@@ -9,7 +9,7 @@ import Confirm from './components/Confirm'
 const Stack = createNativeStackNavigator();
 
 
-export default class UserCreation extends Component { 
+export default class UserAuth extends Component { 
 
     constructor(props) {
         super(props);
