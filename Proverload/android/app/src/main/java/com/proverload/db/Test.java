@@ -12,8 +12,7 @@ public class Test extends RealmObject {
     @Required private String foo;
     @Required private String bar;
 
-    public Test() {
-    }
+    public Test() {}
 
     public Test(String foo, String bar) {
         this.id = new ObjectId();

@@ -9,13 +9,13 @@ import io.realm.annotations.Required;
 public class User extends RealmObject {
 
     @PrimaryKey private ObjectId id;
-
     @Required private String username;
     @Required private String password;
+    private int age;
+    private int weight;
+    private int height;
 
-    @Required private int age;
-    @Required private int weight;
-    @Required private int height;
+    public User() {}
 
     public User(String username, String password, int age, int weight, int height) {
         this.id = new ObjectId();
@@ -23,6 +23,50 @@ public class User extends RealmObject {
         this.password = password;
         this.age = age;
         this.weight = weight;
+        this.height = height;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
         this.height = height;
     }
 
