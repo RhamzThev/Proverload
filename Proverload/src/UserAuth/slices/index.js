@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import users from './users.json'
 
 const { UserModule } = NativeModules;
 
@@ -55,9 +56,13 @@ const UserAuthSlice = createSlice({
     initialState,
     reducers: {
         init() {
-            // if storage not null, so to main page
-        }
+            // if storage not null, go to main page
+            if (getUsername() !== null){
+                
+            } else {
 
+            }
+        }
 
         createUser(state) {
             var userCreated = UserModule.createUser(
@@ -70,3 +75,6 @@ const UserAuthSlice = createSlice({
         }
     }
 })
+
+export const { init, createUser } = UserAuth.actions
+export default UserAuth.reducer

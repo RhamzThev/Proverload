@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Rhamsez",
+        "password": "test",
+        "age": 19,
+        "weight": 200,
+        "height": 70
+    },
+    {
+        "name": "Pharaoh",
+        "password": "test",
+        "age": 19,
+        "weight": 220,
+        "height": 71
+    },
+    {
+        "name": "Tank",
+        "password": "test",
+        "age": 12,
+        "weight": 50,
+        "height": 12
+    }
+]
