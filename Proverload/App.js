@@ -1,11 +1,11 @@
 import React from 'react';
 import { NativeModules, Button } from 'react-native';
 
-const { TestModule } = NativeModules;
+// const { TestModule } = NativeModules;
 
 const App = () => {
   const onPress = () => {
-    TestModule.testDatabase();
+    // TestModule.testDatabase();
   };
 
   return (

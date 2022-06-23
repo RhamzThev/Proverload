@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import UserAuth from './UserAuth';
-import UserAuth from './Use';
+import Main from './Main'
 
 const Stack = createNativeStackNavigator();
 
