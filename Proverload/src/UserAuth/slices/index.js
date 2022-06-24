@@ -45,15 +45,19 @@ import users from './users.json'
 // }
 
 const initialState = {
-    username: ""
+    username: "",
+    password: ""
 }
 
 const UserAuthSlice = createSlice({
     name: "UserAuth",
     initialState,
     reducers: {
-        logIn(username, password) {
-            
+        logIn(state) {
+            console.log(state.username)
         }
     }
 })
+
+export const { logIn } = UserAuthSlice.actions
+export default UserAuthSlice.reducer

@@ -17,7 +17,8 @@ export default function SignIn(props) {
             <TextInput
                 placeholder="Password"
                 value={password}
-                onchangeText={setPassword}
+                onChangeText={setPassword}
+                secureTextEntry={true}
             />
             <Button
                 onPress={() => props.handleLogIn(username, password)}

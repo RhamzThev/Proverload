@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-
+import { useDispatch, connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignIn from './components/SignIn'
 
+import { logIn } from './slices'
+
 const Stack = createNativeStackNavigator();
 
-
-export default class UserAuth extends Component { 
+class UserAuth extends Component { 
 
     constructor(props) {
         super(props);
@@ -21,8 +22,12 @@ export default class UserAuth extends Component {
     }
 
     handleLogIn(username, password) {
-        
-     }
+        const { dispatch } = this.props
+        dispatch(logIn({
+            username: username,
+            password: password
+        }));
+    }
 
     render(){
         return (
@@ -34,3 +39,12 @@ export default class UserAuth extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    const { UserAuth } = state;
+    return {
+        // LEARNING ABOUT THIS RIGHT NOW
+    };
+}
+
+export default connect(mapStateToProps)(UserAuth)
