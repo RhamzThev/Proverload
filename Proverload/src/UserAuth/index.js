@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignIn from './components/SignIn'
 
 import { logIn } from './slices'
+import store from '../store'
 
 const Stack = createNativeStackNavigator();
 
@@ -15,18 +16,25 @@ class UserAuth extends Component {
         super(props);
 
         this.handleLogIn = this.handleLogIn.bind(this);
+
+        store.subscribe(() => {
+            if(store.getState().user.token) {
+                this.props.navigation.navigate("Main");
+            }
+        });
     }
 
     handleLogIn(username, password) {
         const { dispatch } = this.props
-        console.log("handleLogIn: " + username)
 
         state = {
             username: username,
             password: password,
         }
 
-        dispatch(logIn(state))
+        action = logIn(state)
+
+        dispatch(action)
     }
 
     render(){

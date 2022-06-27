@@ -51,8 +51,9 @@ const DATA = [
 ]
 
 const initialState = {
-    username: "",
-    password: ""
+    username: null,
+    password: null,
+    token: null,
 }
 
 function usernameExists(username) {
@@ -85,6 +86,7 @@ const UserAuthSlice = createSlice({
                     console.log("Log in successful")
                     state.username = username
                     state.password = password
+                    state.token = username + "'s token"
                 }
                 console.log("Credentials is not valid")
             }
