@@ -14,19 +14,19 @@ class UserAuth extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            username: "",            
-        }
-
         this.handleLogIn = this.handleLogIn.bind(this);
     }
 
     handleLogIn(username, password) {
         const { dispatch } = this.props
-        dispatch(logIn({
+        console.log("handleLogIn: " + username)
+
+        state = {
             username: username,
-            password: password
-        }));
+            password: password,
+        }
+
+        dispatch(logIn(state))
     }
 
     render(){
@@ -40,11 +40,9 @@ class UserAuth extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    const { UserAuth } = state;
-    return {
-        // LEARNING ABOUT THIS RIGHT NOW
-    };
+function mapStateToProps(state, ownProps?) {
+    const { userAuth } = state;
+    return { user: userAuth };
 }
 
 export default connect(mapStateToProps)(UserAuth)
