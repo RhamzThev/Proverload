@@ -11,16 +11,20 @@ public class User extends RealmObject {
     @PrimaryKey private ObjectId id;
     @Required private String username;
     @Required private String password;
+
+    private String name;
     private int age;
     private int weight;
     private int height;
 
     public User() {}
 
-    public User(String username, String password, int age, int weight, int height) {
+    public User(String username, String password, String name, int age, int weight, int height) {
         this.id = new ObjectId();
         this.username = username;
         this.password = password;
+
+        this.name = name;
         this.age = age;
         this.weight = weight;
         this.height = height;
@@ -45,6 +49,10 @@ public class User extends RealmObject {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public int getAge() {
         return age;

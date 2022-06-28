@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import SignIn from './components/SignIn'
@@ -36,13 +35,14 @@ class UserAuth extends Component {
 
     render(){
         return (
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            // screenOptions={{ headerShown: false }}
+            <Stack.Navigator>
                 <Stack.Screen name="Log In">
-                    {() => <SignIn handleLogIn={this.handleLogIn}/>}
+                    {props => <SignIn {...props} handleLogIn={this.handleLogIn}/>}
                 </Stack.Screen>
-                {/* <Stack.Screen>
+                <Stack.Screen name="Sign Up">
                     {() => <SignUp handleSignUp={this.handleSignUp}/>}
-                </Stack.Screen> */}
+                </Stack.Screen>
             </Stack.Navigator>
         )
     }

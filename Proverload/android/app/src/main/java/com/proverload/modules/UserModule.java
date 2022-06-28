@@ -81,14 +81,14 @@ public class UserModule extends ReactContextBaseJavaModule {
      * @param height    The height of the created user.
      */
     @ReactMethod
-    public void createUser(String username, String password, int age, int weight, int height) {
+    public void createUser(String username, String password, String name, int age, int weight, int height) {
         //OPEN REALM
         String realmName = "Proverload";
         RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
         Realm realm = Realm.getInstance(configuration);
 
         // Create User object
-        User user = new User(username, password, age, weight, height);
+        User user = new User(username, password, name, age, weight, height);
 
         // Add created user to the database
         realm.executeTransaction(transactionRealm -> {

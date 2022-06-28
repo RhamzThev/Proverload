@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button } from 'react-native';
 
-export default function SignIn(props) {
+export default function SignIn({ handleLogIn, navigation }) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -24,7 +24,12 @@ export default function SignIn(props) {
                 onPress={() => props.handleLogIn(username, password)}
                 title="Log In"
             />
-            <Text>No account? Create one!</Text>
+            <Text>No account?
+                <Text style={{color: 'blue'}}
+                    onPress={() => navigation.navigate("Sign Up")}>
+                     Create one!
+                </Text>
+            </Text>
         </View>
     );
 };

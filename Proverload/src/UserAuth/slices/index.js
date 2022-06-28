@@ -1,6 +1,10 @@
+import { NativeModules } from 'react-native';
+
 import { createSlice } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import users from './users.json'
+// import users from './users.json'
+
+const { UserModule } = NativeModules;
 
 const DATA = [
     {"username": "rozfom", "password": "test", "name": "Rhamsez", "age": 19, "weight": 225, "height": 70},
