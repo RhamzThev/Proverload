@@ -6,15 +6,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { UserModule } = NativeModules;
 
-const DATA = [
-    {"username": "rozfom", "password": "test", "name": "Rhamsez", "age": 19, "weight": 225, "height": 70},
-    {"username": "exampleone", "password": "test", "name": "Example One", "age": 20, "weight": 180, "height": 100},
-    {"username": "exampletwo", "password": "test", "name": "Example Two", "age": 25, "weight": 250, "height": 60},
-]
+// const DATA = [
+//     {"username": "rozfom", "password": "test", "name": "Rhamsez", "age": 19, "weight": 225, "height": 70},
+//     {"username": "exampleone", "password": "test", "name": "Example One", "age": 20, "weight": 180, "height": 100},
+//     {"username": "exampletwo", "password": "test", "name": "Example Two", "age": 25, "weight": 250, "height": 60},
+// ]
+
+// function usernameExists(username) {
+//     for (let user in DATA) {
+//         if (DATA[user]["username"] == username) {
+//             return true
+//         }
+//     }
+//     return false
+// }
+
+// function validCredentials(username, password) {
+//     for (let user in DATA) {
+//         if (DATA[user]["username"] == username && DATA[user]["password"] == password) {
+//             return true
+//         }
+//     }
+//     return false
+// }
+
+// function logInUser(state, username) {
+//     UserModule.logIn(username, password)
+// }
 
 const initialState = {
     username: null,
-    password: null,
     name: null,
     age: null,
     weight: null,
@@ -22,38 +43,13 @@ const initialState = {
     token: null,
 }
 
-function usernameExists(username) {
-    for (let user in DATA) {
-        if (DATA[user]["username"] == username) {
-            return true
-        }
-    }
-    return false
-}
-
-function validCredentials(username, password) {
-    for (let user in DATA) {
-        if (DATA[user]["username"] == username && DATA[user]["password"] == password) {
-            return true
-        }
-    }
-    return false
-}
-
-function logInUser(state, username) {
-
-    for (let user in DATA) {
-        if (DATA[user]["username"] == username) {
-            state.username = DATA[user]["username"]
-            state.password = DATA[user]["password"]
-            state.name = DATA[user]["name"]
-            state.age = DATA[user]["age"]
-            state.weight = DATA[user]["weight"]
-            state.height = DATA[user]["height"]
-            state.token = username + "'s token"
-        }
-    }
-    console.log(state)
+function getUserInfo(state, username) {
+    state.username = username
+    state.name = UserModule.name()
+    state.age = UserModule.age()
+    state.weight = UserModule.weight()
+    state.height = UserModule.height()
+    state.token = username + "'s token"
 }
 
 const UserAuthSlice = createSlice({
@@ -63,18 +59,33 @@ const UserAuthSlice = createSlice({
         logIn(state, action) {
             username = action.payload.username
             password = action.payload.password
-            if (usernameExists(username)) {
-                if (validCredentials(username, password)) {
-                    console.log("Log in successful")
-                    logInUser(state, username)
-                    console.log(state)
-                }
-                // console.log("Credentials is not valid")
+
+            if(UserModule.logIn(username, password)) {
+                console.log("USER LOGGED IN")
+                getUserInfo(state, username)
+            } else {
+                console.log("LMAO YOU FAILED")
             }
-            // console.log("Username doesn't exist")
+
+        },
+
+        signUp(state, action) {
+            username = action.payload.username
+            password = action.payload.password
+            name = action.payload.name
+            age = action.payload.age
+            weight = action.payload.weight
+            height = action.payload.height
+
+            if(UserModule.signUp(username, password, name, age, weight, height)) {
+                console.log("USER SIGNED IN")
+                getUserInfo(state, username)
+            } else {
+                console.log("LMAO YOU FAILED DOOFUS")
+            }
         }
     }
 })
 
-export const { logIn } = UserAuthSlice.actions
+export const { logIn, signUp } = UserAuthSlice.actions
 export default UserAuthSlice.reducer

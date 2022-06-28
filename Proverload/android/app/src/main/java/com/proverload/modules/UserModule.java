@@ -48,6 +48,70 @@ public class UserModule extends ReactContextBaseJavaModule {
                 .findFirst() != null;
     }
 
+    @ReactMethod
+    public String name(String username) {
+        // OPEN REALM
+        String realmName = "Proverload";
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
+        Realm realm = Realm.getInstance(configuration);
+
+        User user = realm.where(User.class)
+                .equalTo("username", username)
+                .findFirst();
+
+        realm.close();
+
+        return user.getName();
+    }
+
+    @ReactMethod
+    public int age(String username) {
+        // OPEN REALM
+        String realmName = "Proverload";
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
+        Realm realm = Realm.getInstance(configuration);
+
+        User user = realm.where(User.class)
+                .equalTo("username", username)
+                .findFirst();
+
+        realm.close();
+
+        return user.getAge();
+    }
+
+    @ReactMethod
+    public int weight(String username) {
+        // OPEN REALM
+        String realmName = "Proverload";
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
+        Realm realm = Realm.getInstance(configuration);
+
+        User user = realm.where(User.class)
+                .equalTo("username", username)
+                .findFirst();
+
+        realm.close();
+
+        return user.getWeight();
+    }
+
+    @ReactMethod
+    public int height(String username) {
+        // OPEN REALM
+        String realmName = "Proverload";
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
+        Realm realm = Realm.getInstance(configuration);
+
+        User user = realm.where(User.class)
+                .equalTo("username", username)
+                .findFirst();
+
+        realm.close();
+
+        return user.getHeight();
+    }
+
     /**
      * Attempts to log in user with given credentials.
      *
@@ -72,7 +136,7 @@ public class UserModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Creates user with the given information.
+     * Creates user with the given information, and logs in created user.
      *
      * @param username  The username of the created user.
      * @param password  The password of the created user.
@@ -81,25 +145,33 @@ public class UserModule extends ReactContextBaseJavaModule {
      * @param height    The height of the created user.
      */
     @ReactMethod
-    public void createUser(String username, String password, String name, int age, int weight, int height) {
+    public boolean signUp(String username, String password, String name, int age, int weight, int height) {
         //OPEN REALM
         String realmName = "Proverload";
         RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
         Realm realm = Realm.getInstance(configuration);
 
-        // Create User object
-        User user = new User(username, password, name, age, weight, height);
+        // IF USERNAME DOES NOT EXIST
+        if (!userExists(username, realm)) {
+            // Create User object
+            User user = new User(username, password, name, age, weight, height);
 
-        // Add created user to the database
-        realm.executeTransaction(transactionRealm -> {
-            transactionRealm.insert(user);
-        });
+            // Add created user to the database
+            realm.executeTransaction(transactionRealm -> {
+                transactionRealm.insert(user);
+            });
 
-        // Log the created user in.
-        logIn(username, password);
+            realm.close();
+
+            // Log the created user in.
+            return logIn(username, password);
+
+        }
 
         // CLOSE REALM
         realm.close();
+        return false;
+
     }
 
 }

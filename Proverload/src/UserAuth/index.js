@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SignIn from './components/SignIn'
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 
-import { logIn } from './slices'
-import store from '../store'
+import { logIn, signUp } from './slices';
+import store from '../store';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ class UserAuth extends Component {
         super(props);
 
         this.handleLogIn = this.handleLogIn.bind(this);
-        // this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
     }
 
     handleLogIn(username, password) {
@@ -31,7 +32,22 @@ class UserAuth extends Component {
         dispatch(action)
     }
 
-    // handleSignUp(username, password)
+    handleSignUp(username, password, name, age, weight, height) {
+        const { dispatch } = this.props
+
+        state = {
+            username: username,
+            password: password,
+            name: name,
+            age: age,
+            weight: weight,
+            height: height,
+        }
+
+        action = signUp(state)
+
+        dispatch(action)
+    }
 
     render(){
         return (

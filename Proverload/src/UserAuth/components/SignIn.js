@@ -21,7 +21,7 @@ export default function SignIn({ handleLogIn, navigation }) {
                 secureTextEntry={true}
             />
             <Button
-                onPress={() => props.handleLogIn(username, password)}
+                onPress={() => handleLogIn(username, password)}
                 title="Log In"
             />
             <Text>No account?

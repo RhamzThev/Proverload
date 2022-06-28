@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
+
 import { View, Text } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import store from '../store';
+
 const Stack = createNativeStackNavigator();
 
-function Main(props) {
-    return (
+class Main extends Component { 
+
+    constructor(props) {
+        super(props); 
+    }
+
+    render() {
+        return (
             // <Stack.Navigator>
             //     <Stack.Screen 
             //         name="Main"
@@ -17,10 +26,11 @@ function Main(props) {
             // </Stack.Navigator>
             <View>
                 <Text>
-                    Main Screen
+                    name: {store.getState().user.name}
                 </Text>
             </View>
     )
+    }
 }
 
 function mapStateToProps(state, ownProps?) {
