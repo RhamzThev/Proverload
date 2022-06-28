@@ -16,12 +16,7 @@ class UserAuth extends Component {
         super(props);
 
         this.handleLogIn = this.handleLogIn.bind(this);
-
-        store.subscribe(() => {
-            if(store.getState().user.token) {
-                this.props.navigation.navigate("Main");
-            }
-        });
+        this.handleSignUp = this.handleSignUp.bind(this);
     }
 
     handleLogIn(username, password) {
@@ -42,6 +37,9 @@ class UserAuth extends Component {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Log In">
                     {() => <SignIn handleLogIn={this.handleLogIn}/>}
+                </Stack.Screen>
+                <Stack.Screen>
+                    {() => <SignUp handleSignUp={this.handleSignUp}/>}
                 </Stack.Screen>
             </Stack.Navigator>
         )
