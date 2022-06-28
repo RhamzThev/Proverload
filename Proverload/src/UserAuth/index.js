@@ -16,7 +16,7 @@ class UserAuth extends Component {
         super(props);
 
         this.handleLogIn = this.handleLogIn.bind(this);
-        this.handleSignUp = this.handleSignUp.bind(this);
+        // this.handleSignUp = this.handleSignUp.bind(this);
     }
 
     handleLogIn(username, password) {
@@ -32,15 +32,17 @@ class UserAuth extends Component {
         dispatch(action)
     }
 
+    // handleSignUp(username, password)
+
     render(){
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Log In">
                     {() => <SignIn handleLogIn={this.handleLogIn}/>}
                 </Stack.Screen>
-                <Stack.Screen>
+                {/* <Stack.Screen>
                     {() => <SignUp handleSignUp={this.handleSignUp}/>}
-                </Stack.Screen>
+                </Stack.Screen> */}
             </Stack.Navigator>
         )
     }
