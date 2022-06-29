@@ -10,7 +10,6 @@ import store from './store';
 
 function LoggingIn() {
     const token = useSelector(state => state.user.token)
-    console.log(token)
     return (
         token === null ? <UserAuth /> : <Main />
     );

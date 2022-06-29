@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -55,6 +56,10 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     Realm.init(this);
+
+    RealmConfiguration configuration = new RealmConfiguration.Builder().name("Proverload").build();
+    Realm.setDefaultConfiguration(configuration);
+
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);

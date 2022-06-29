@@ -2,37 +2,8 @@ import { NativeModules } from 'react-native';
 
 import { createSlice } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import users from './users.json'
 
 const { UserModule } = NativeModules;
-
-// const DATA = [
-//     {"username": "rozfom", "password": "test", "name": "Rhamsez", "age": 19, "weight": 225, "height": 70},
-//     {"username": "exampleone", "password": "test", "name": "Example One", "age": 20, "weight": 180, "height": 100},
-//     {"username": "exampletwo", "password": "test", "name": "Example Two", "age": 25, "weight": 250, "height": 60},
-// ]
-
-// function usernameExists(username) {
-//     for (let user in DATA) {
-//         if (DATA[user]["username"] == username) {
-//             return true
-//         }
-//     }
-//     return false
-// }
-
-// function validCredentials(username, password) {
-//     for (let user in DATA) {
-//         if (DATA[user]["username"] == username && DATA[user]["password"] == password) {
-//             return true
-//         }
-//     }
-//     return false
-// }
-
-// function logInUser(state, username) {
-//     UserModule.logIn(username, password)
-// }
 
 const initialState = {
     username: null,
@@ -77,12 +48,16 @@ const UserAuthSlice = createSlice({
             weight = action.payload.weight
             height = action.payload.height
 
-            if(UserModule.signUp(username, password, name, age, weight, height)) {
-                console.log("USER SIGNED IN")
-                getUserInfo(state, username)
-            } else {
-                console.log("LMAO YOU FAILED DOOFUS")
-            }
+            var signedUp = UserModule.signUp(username, password, name, Number(age), Number(weight), Number(height))
+
+            console.log(signedUp)
+
+            // if() {
+            //     console.log("USER SIGNED IN")
+            //     getUserInfo(state, username)
+            // } else {
+            //     console.log("LMAO YOU FAILED DOOFUS")
+            // }
         }
     }
 })

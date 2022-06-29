@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, NativeModules } from 'react-native';
+
+const { TestModule } = NativeModules;
 
 export default function SignIn({ handleLogIn, navigation }) {
 
@@ -30,6 +32,14 @@ export default function SignIn({ handleLogIn, navigation }) {
                      Create one!
                 </Text>
             </Text>
+            <Button
+                onPress={() => TestModule.deleteRealm()}
+                title="DELETE REALM"
+            />
+            <Button
+                onPress={() => TestModule.findDir()}
+                title="FIND DIRECTORY"
+            />
         </View>
     );
 };

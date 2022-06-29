@@ -51,15 +51,12 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public String name(String username) {
         // OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         User user = realm.where(User.class)
                 .equalTo("username", username)
                 .findFirst();
 
-        realm.close();
 
         return user.getName();
     }
@@ -67,15 +64,12 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public int age(String username) {
         // OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         User user = realm.where(User.class)
                 .equalTo("username", username)
                 .findFirst();
 
-        realm.close();
 
         return user.getAge();
     }
@@ -83,15 +77,12 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public int weight(String username) {
         // OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         User user = realm.where(User.class)
                 .equalTo("username", username)
                 .findFirst();
 
-        realm.close();
 
         return user.getWeight();
     }
@@ -99,15 +90,12 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public int height(String username) {
         // OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         User user = realm.where(User.class)
                 .equalTo("username", username)
                 .findFirst();
 
-        realm.close();
 
         return user.getHeight();
     }
@@ -122,16 +110,14 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public boolean logIn(String username, String password) {
         // OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         // Check if username and password is correct
         if (userExists(username, realm)) {
-            realm.close();
+            System.out.println("LOG IN:  Yeah, you passed!");
             return validCredentials(username, password, realm);
         }
-        realm.close();
+        System.out.println("LOG IN: Hey, you failed.");
         return false;
     }
 
@@ -147,9 +133,7 @@ public class UserModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public boolean signUp(String username, String password, String name, int age, int weight, int height) {
         //OPEN REALM
-        String realmName = "Proverload";
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
-        Realm realm = Realm.getInstance(configuration);
+        Realm realm = Realm.getDefaultInstance();
 
         // IF USERNAME DOES NOT EXIST
         if (!userExists(username, realm)) {
@@ -161,15 +145,16 @@ public class UserModule extends ReactContextBaseJavaModule {
                 transactionRealm.insert(user);
             });
 
-            realm.close();
 
             // Log the created user in.
+            System.out.println("SIGN UP: Yeah, you passed!");
             return logIn(username, password);
 
         }
 
         // CLOSE REALM
-        realm.close();
+
+        System.out.println("SIGN UP: Hey, you failed.");
         return false;
 
     }
