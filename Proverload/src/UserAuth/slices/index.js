@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { UserModule } = NativeModules;
@@ -14,13 +14,16 @@ const initialState = {
     token: null,
 }
 
-function getUserInfo(state, username) {
+async function getUserInfo(state, username) {
     state.username = username
-    state.name = UserModule.name()
-    state.age = UserModule.age()
-    state.weight = UserModule.weight()
-    state.height = UserModule.height()
-    state.token = username + "'s token"
+
+    var name = await UserModule.name(username)
+    state.name = name
+    // state.name = String(UserModule.name(username))
+    // state.age = Number(UserModule.age(username))
+    // state.weight = Number(UserModule.weight(username))
+    // state.height = Number(UserModule.height(username))
+    // state.token = username + "'s token"
 }
 
 const UserAuthSlice = createSlice({
@@ -31,9 +34,12 @@ const UserAuthSlice = createSlice({
             username = action.payload.username
             password = action.payload.password
 
-            if(UserModule.logIn(username, password)) {
+            var loggedIn = UserModule.logIn(username, password)
+
+            if(loggedIn) {
                 console.log("USER LOGGED IN")
                 getUserInfo(state, username)
+
             } else {
                 console.log("LMAO YOU FAILED")
             }

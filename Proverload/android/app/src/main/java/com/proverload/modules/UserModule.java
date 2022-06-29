@@ -2,6 +2,7 @@ package com.proverload.modules;
 
 import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -49,7 +50,7 @@ public class UserModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public String name(String username) {
+    public void name(String username, Promise promise) {
         // OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
@@ -57,12 +58,15 @@ public class UserModule extends ReactContextBaseJavaModule {
                 .equalTo("username", username)
                 .findFirst();
 
-
-        return user.getName();
+        if(user == null) {
+            promise.reject(new Throwable("Nah."));
+        } else {
+            promise.resolve(user.getName());
+        }
     }
 
     @ReactMethod
-    public int age(String username) {
+    public void age(String username, Promise promise) {
         // OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
@@ -70,12 +74,15 @@ public class UserModule extends ReactContextBaseJavaModule {
                 .equalTo("username", username)
                 .findFirst();
 
-
-        return user.getAge();
+        if(user == null) {
+            promise.reject(new Throwable("Nah."));
+        } else {
+            promise.resolve(user.getAge());
+        }
     }
 
     @ReactMethod
-    public int weight(String username) {
+    public void weight(String username, Promise promise) {
         // OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
@@ -83,12 +90,15 @@ public class UserModule extends ReactContextBaseJavaModule {
                 .equalTo("username", username)
                 .findFirst();
 
-
-        return user.getWeight();
+        if(user == null) {
+            promise.reject(new Throwable("Nah."));
+        } else {
+            promise.resolve(user.getWeight());
+        }
     }
 
     @ReactMethod
-    public int height(String username) {
+    public void height(String username, Promise promise) {
         // OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
@@ -96,8 +106,11 @@ public class UserModule extends ReactContextBaseJavaModule {
                 .equalTo("username", username)
                 .findFirst();
 
-
-        return user.getHeight();
+        if(user == null) {
+            promise.reject(new Throwable("Nah."));
+        } else {
+            promise.resolve(user.getHeight());
+        }
     }
 
     /**
@@ -108,17 +121,17 @@ public class UserModule extends ReactContextBaseJavaModule {
      * @return  true if user can be logged in. false if otherwise.
      */
     @ReactMethod
-    public boolean logIn(String username, String password) {
+    public void logIn(String username, String password, Promise promise) {
         // OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
         // Check if username and password is correct
         if (userExists(username, realm)) {
             System.out.println("LOG IN:  Yeah, you passed!");
-            return validCredentials(username, password, realm);
+            promise.resolve(validCredentials(username, password, realm));
         }
         System.out.println("LOG IN: Hey, you failed.");
-        return false;
+        promise.resolve(false);
     }
 
     /**
@@ -131,7 +144,7 @@ public class UserModule extends ReactContextBaseJavaModule {
      * @param height    The height of the created user.
      */
     @ReactMethod
-    public boolean signUp(String username, String password, String name, int age, int weight, int height) {
+    public void signUp(String username, String password, String name, int age, int weight, int height, Promise promise) {
         //OPEN REALM
         Realm realm = Realm.getDefaultInstance();
 
@@ -148,14 +161,14 @@ public class UserModule extends ReactContextBaseJavaModule {
 
             // Log the created user in.
             System.out.println("SIGN UP: Yeah, you passed!");
-            return logIn(username, password);
-
+            promise.resolve(true);
         }
 
         // CLOSE REALM
 
         System.out.println("SIGN UP: Hey, you failed.");
-        return false;
+        promise.resolve(false);
+
 
     }
 
