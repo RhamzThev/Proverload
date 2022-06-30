@@ -2,16 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 
-import UserAuth from './UserAuth';
-import Main from './Main';
+import Auth from './auth';
+import Main from './main';
 
 import { Provider, connect } from 'react-redux';
 import store from './store';
 
 function LoggingIn() {
-    const token = useSelector(state => state.user.token)
+    const token = useSelector(state => state.auth.token)
     return (
-        token === null ? <UserAuth /> : <Main />
+        token === null ? <Auth /> : <Main />
     );
 }
 

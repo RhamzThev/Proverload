@@ -26,7 +26,7 @@ class Main extends Component {
             // </Stack.Navigator>
             <View>
                 <Text>
-                    name: {store.getState().user.username}
+                    name: {store.getState().auth.username}
                 </Text>
             </View>
     )

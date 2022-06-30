@@ -10,7 +10,7 @@ import store from '../store';
 
 const Stack = createNativeStackNavigator();
 
-class UserAuth extends Component { 
+class Auth extends Component { 
 
     constructor(props) {
         super(props);
@@ -65,8 +65,8 @@ class UserAuth extends Component {
 }
 
 function mapStateToProps(state, ownProps?) {
-    const { userAuth } = state;
-    return { user: userAuth };
+    const { auth } = state;
+    return { auth: auth };
 }
 
-export default connect(mapStateToProps)(UserAuth)
+export default connect(mapStateToProps)(Auth)
