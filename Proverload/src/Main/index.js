@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import { signOut } from '../auth/slices';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 import store from '../store';
 
@@ -13,7 +15,16 @@ const Stack = createNativeStackNavigator();
 class Main extends Component { 
 
     constructor(props) {
-        super(props); 
+        super(props);
+        this.handleSignOut = this.handleSignOut.bind(this);
+
+    }
+
+    handleSignOut() {
+        const { dispatch } = this.props
+        action = signOut()
+
+        dispatch(action)
     }
 
     render() {
@@ -28,6 +39,10 @@ class Main extends Component {
                 <Text>
                     name: {store.getState().auth.username}
                 </Text>
+                <Button 
+                    onPress={() => this.handleSignOut()}
+                    title="SIGN OUT"
+                />
             </View>
     )
     }

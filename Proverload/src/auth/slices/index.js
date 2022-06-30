@@ -36,8 +36,6 @@ export const logIn = createAsyncThunk(
     'auth/logInStatus',
     async (action, thunkAPI) => {
 
-        console.log(action)
-
         var loggedIn = await UserModule.logIn(action.username, action.password)
 
         console.log(loggedIn)
@@ -49,44 +47,27 @@ export const logIn = createAsyncThunk(
     }
 )
 
+export const signUp = createAsyncThunk(
+    'auth/signUpStatus',
+    async (action, thunkAPI) => {
+
+        var signedUp = await UserModule.signUp(action.username, action.password, action.name, Number(action.age), Number(action.weight), Number(action.height))
+
+        console.log(signedUp)
+
+        if(signedUp) {
+            return getUserInfo(action.username)
+        }
+
+    }
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        // logIn(state, action) {
-        //     username = action.payload.username
-        //     password = action.payload.password
-
-        //     var loggedIn = UserModule.logIn(username, password)
-
-        //     if(loggedIn) {
-        //         console.log("USER LOGGED IN")
-        //         getUserInfo(state, username)
-
-        //     } else {
-        //         console.log("LMAO YOU FAILED")
-        //     }
-
-        // },
-
-        signUp(state, action) {
-            username = action.payload.username
-            password = action.payload.password
-            name = action.payload.name
-            age = action.payload.age
-            weight = action.payload.weight
-            height = action.payload.height
-
-            var signedUp = UserModule.signUp(username, password, name, Number(age), Number(weight), Number(height))
-
-            console.log(signedUp)
-
-            // if() {
-            //     console.log("USER SIGNED IN")
-            //     getUserInfo(state, username)
-            // } else {
-            //     console.log("LMAO YOU FAILED DOOFUS")
-            // }
+        signOut(state) {
+            state.token = null
         }
     },
     extraReducers: {
@@ -98,8 +79,16 @@ const authSlice = createSlice({
             state.height = action.payload.height
             state.token = action.payload.token
         },
+        [signUp.fulfilled]: (state, action) => {
+            state.username = action.payload.username
+            state.name = action.payload.name
+            state.age = action.payload.age
+            state.weight = action.payload.weight
+            state.height = action.payload.height
+            state.token = action.payload.token
+        }
     }
 })
 
-export const { signUp } = authSlice.actions
+export const { signOut } = authSlice.actions
 export default authSlice.reducer

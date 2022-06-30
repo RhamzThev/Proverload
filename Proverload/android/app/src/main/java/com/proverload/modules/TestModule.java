@@ -74,6 +74,9 @@ public class TestModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void deleteRealm() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.close();
+
         String realmName = "Proverload";
         RealmConfiguration configuration = new RealmConfiguration.Builder().name(realmName).build();
         Realm.deleteRealm(configuration);
