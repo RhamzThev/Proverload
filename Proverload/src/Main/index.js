@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { signOut } from '../auth/slices';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Home from './components/Home'
+import Fitness from '../fitness'
 
 import store from '../store';
 
@@ -29,21 +31,23 @@ class Main extends Component {
 
     render() {
         return (
-            // <Stack.Navigator>
-            //     <Stack.Screen 
-            //         name="Main"
-            //         component={Main}
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen name="Home">
+                    {props => <Home {...props} name={store.getState().auth.name}/>}
+                </Stack.Screen>
+                <Stack.Screen name="Fitness">
+                    {props => <Fitness {...props} />}
+                </Stack.Screen>
+            </Stack.Navigator>
+            // <View>
+            //     <Text>
+            //         name: {store.getState().auth.username}
+            //     </Text>
+            //     <Button 
+            //         onPress={() => this.handleSignOut()}
+            //         title="SIGN OUT"
             //     />
-            // </Stack.Navigator>
-            <View>
-                <Text>
-                    name: {store.getState().auth.username}
-                </Text>
-                <Button 
-                    onPress={() => this.handleSignOut()}
-                    title="SIGN OUT"
-                />
-            </View>
+            // </View>
     )
     }
 }
