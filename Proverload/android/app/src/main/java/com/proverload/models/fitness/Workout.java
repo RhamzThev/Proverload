@@ -2,19 +2,21 @@ package com.proverload.models.fitness;
 
 import org.bson.types.ObjectId;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class IndExercise {
-    @PrimaryKey
-    private ObjectId id;
-    @Required
-    private String name;
+public class Workout extends RealmObject {
+    @PrimaryKey private ObjectId id;
+    @Required private String name;
+    @Required private ObjectId regimeId;
 
-    public IndExercise() {}
+    public Workout() {}
 
-    public IndExercise(String name) {
+    public Workout(String name, ObjectId regimeId) {
+        this.id = new ObjectId();
         this.name = name;
+        this.regimeId = regimeId;
     }
 
     public ObjectId getId() {

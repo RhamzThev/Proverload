@@ -5,16 +5,22 @@ import org.bson.types.ObjectId;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class IndExercise {
+public class Regime {
     @PrimaryKey
     private ObjectId id;
     @Required
     private String name;
+    private String description;
 
-    public IndExercise() {}
+    public Regime() {}
 
-    public IndExercise(String name) {
+    public Regime(String name) {
         this.name = name;
+    }
+
+    public Regime(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public ObjectId getId() {
@@ -27,5 +33,13 @@ public class IndExercise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
