@@ -7,7 +7,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.proverload.modules.TestModule;
-import com.proverload.modules.UserModule;
+import com.proverload.modules.AuthModule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class ProverloadPackage implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new TestModule(reactContext));
-        modules.add(new UserModule(reactContext));
+        modules.add(new AuthModule(reactContext));
 
         return modules;
     }

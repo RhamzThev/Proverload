@@ -6,19 +6,18 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.proverload.models.User;
+import com.proverload.models.auth.User;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
-public class UserModule extends ReactContextBaseJavaModule {
+public class AuthModule extends ReactContextBaseJavaModule {
 
-    public UserModule(@Nullable ReactApplicationContext reactContext) {
+    public AuthModule(@Nullable ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
     @Override
-    public String getName() { return "UserModule"; }
+    public String getName() { return "AuthModule"; }
 
     /**
      * Determines if user with given username exists.

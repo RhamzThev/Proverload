@@ -1,4 +1,4 @@
-package com.proverload.models;
+package com.proverload.models.auth;
 
 import org.bson.types.ObjectId;
 
