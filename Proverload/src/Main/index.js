@@ -14,7 +14,7 @@ import store from '../store';
 
 const Stack = createNativeStackNavigator();
 
-class Main extends Component { 
+export default class Main extends Component { 
 
     constructor(props) {
         super(props);
@@ -56,5 +56,3 @@ function mapStateToProps(state, ownProps?) {
     const { main } = state;
     return { main: main };
 }
-
-export default connect(mapStateToProps)(Main)

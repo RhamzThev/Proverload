@@ -14,6 +14,7 @@ public class IndExercise {
     public IndExercise() {}
 
     public IndExercise(String name) {
+        this.id = new ObjectId();
         this.name = name;
     }
 

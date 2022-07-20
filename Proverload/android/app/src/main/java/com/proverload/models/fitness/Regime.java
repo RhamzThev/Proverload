@@ -19,6 +19,7 @@ public class Regime {
     }
 
     public Regime(String name, String description) {
+        this.id = new ObjectId();
         this.name = name;
         this.description = description;
     }
