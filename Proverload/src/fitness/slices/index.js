@@ -87,7 +87,7 @@ function joinSets(sets) {
     var output = sets
     for (var i in output) {
         var exercises = readExerciseBySetId(output[i].id)
-        output[i].exercises = joinExercises(exercises)3
+        output[i].exercises = joinExercises(exercises);
     }
     return output
 
