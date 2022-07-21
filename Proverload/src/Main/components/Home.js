@@ -7,8 +7,8 @@ export default function Home({name, navigation}) {
         <View>
             <Text>{name}</Text>
             <Button
-                onPress={() => navigation.navigate("Fitness")}
-                title="Workout"
+                onPress={() => navigation.navigate("Fitness Page")}
+                title="Fitness"
             />
         </View>
     );

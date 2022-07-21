@@ -32,27 +32,13 @@ export default class Main extends Component {
     render() {
         return (
             <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name="Home">
+                <Stack.Screen name="Home Page">
                     {props => <Home {...props} name={store.getState().auth.name}/>}
                 </Stack.Screen>
-                <Stack.Screen name="Fitness">
+                <Stack.Screen name="Fitness Page">
                     {props => <Fitness {...props} />}
                 </Stack.Screen>
             </Stack.Navigator>
-            // <View>
-            //     <Text>
-            //         name: {store.getState().auth.username}
-            //     </Text>
-            //     <Button 
-            //         onPress={() => this.handleSignOut()}
-            //         title="SIGN OUT"
-            //     />
-            // </View>
     )
     }
-}
-
-function mapStateToProps(state, ownProps?) {
-    const { main } = state;
-    return { main: main };
 }
