@@ -40,19 +40,22 @@ class Fitness extends Component {
         return (
             <Stack.Navigator initialRouteName="Fitness">
                 <Stack.Screen name="Fitness">
-                    {props => <Main {...props} 
+                    {props => <Main 
+                        {...props} 
                         elements={store.getState().fitness.regimes}
                         handleChild={this.handleSelectRegime}/>}
                 </Stack.Screen>
                 <Stack.Screen name="Regime">
-                    {props => <Main {...props} 
+                    {props => <Main 
+                        {...props} 
                         elements={store.getState().fitness.workouts}
                         handleChild={this.handleSelectWorkout}/>}
                 </Stack.Screen>
-                <Stack.Screen
-                    name="Workout"
-                    component={Workout}
-                />
+                <Stack.Screen name="Workout">
+                    {props => <Workout 
+                        {...props} 
+                        elements={store.getState().fitness.sets}/>}
+                </Stack.Screen>
                 <Stack.Screen
                     name="Set"
                     component={Set}
