@@ -27,18 +27,18 @@ var sets = [
 ];
 
 var exercises = [
-    {id: 1, indExId: 1, setId: 1},
-    {id: 2, indExId: 2, setId: 1},
-    {id: 3, indExId: 3, setId: 2},
-    {id: 4, indExId: 4, setId: 3},
-    {id: 5, indExId: 5, setId: 3},
-    {id: 6, indExId: 6, setId: 4},
-    {id: 7, indExId: 7, setId: 5},
-    {id: 8, indExId: 8, setId: 6},
-    {id: 9, indExId: 6, setId: 6},
-    {id: 10, indExId: 4, setId: 7},
-    {id: 11, indExId: 9, setId: 8},
-    {id: 12, indExId: 3, setId: 8},
+    {id: 1, indExId: 1, setId: 1, sets: 3, reps: 10},
+    {id: 2, indExId: 2, setId: 1, sets: 3, reps: 12},
+    {id: 3, indExId: 3, setId: 2, sets: 4, reps: 10},
+    {id: 4, indExId: 4, setId: 3, sets: 3, reps: 12},
+    {id: 5, indExId: 5, setId: 3, sets: 3, reps: 10},
+    {id: 6, indExId: 6, setId: 4, sets: 4, reps: 10},
+    {id: 7, indExId: 7, setId: 5, sets: 4, reps: 8},
+    {id: 8, indExId: 8, setId: 6, sets: 3, reps: 10},
+    {id: 9, indExId: 6, setId: 6, sets: 3, reps: 12},
+    {id: 10, indExId: 4, setId: 7, sets: 4, reps: 10},
+    {id: 11, indExId: 9, setId: 8, sets: 3, reps: 8},
+    {id: 12, indExId: 3, setId: 8, sets: 3, reps: 6},
 ];
 
 var indExercises = [
@@ -83,6 +83,39 @@ function readSetByWorkoutId(id) {
     })
 }
 
+function joinSets(sets) {
+    var output = sets
+    for (var i in output) {
+        var exercises = readExerciseBySetId(output[i].id)
+        output[i].exercises = joinExercises(exercises)3
+    }
+    return output
+
+}
+
+function readExerciseBySetId(id){
+    return exercises.filter(exercise => {
+        return exercise.setId == id;
+    })
+}
+
+function joinExercises(exercises) {
+    var output = exercises
+    for (var i in output) {
+        var name = readIndExName(output[i].indExId)
+        output[i].name = name;
+    }
+    return output;
+}
+
+function readIndExName(id){
+    var [indExercise] = indExercises.filter(indEx => {
+        return indEx.id == id
+    })
+
+    return indExercise.name;
+}
+
 const fitnessSlice = createSlice({
     name: "fitness",
     initialState: testState,
@@ -91,7 +124,8 @@ const fitnessSlice = createSlice({
             state.workouts = readWorkoutByRegimeId(action.payload)
         },
         selectWorkout(state, action) {
-            state.sets = readSetByWorkoutId(action.payload)
+            var sets = readSetByWorkoutId(action.payload)
+            state.sets = joinSets(sets)
         }
     }
 })
