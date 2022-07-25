@@ -32,14 +32,6 @@ export default function SignIn({ handleLogIn, navigation }) {
                      Create one!
                 </Text>
             </Text>
-            <Button
-                onPress={() => TestModule.deleteRealm()}
-                title="DELETE REALM"
-            />
-            <Button
-                onPress={() => TestModule.findDir()}
-                title="FIND DIRECTORY"
-            />
         </View>
     );
 };

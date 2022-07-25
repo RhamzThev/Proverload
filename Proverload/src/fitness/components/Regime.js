@@ -58,7 +58,7 @@ function CreateElement({handleCreate}) {
     )
 }
 
-export default function Main(props) {
+export default function Regime(props) {
 
     return(
         <View>

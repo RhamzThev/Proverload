@@ -10,8 +10,8 @@ public class Exercise extends RealmObject {
     @PrimaryKey private ObjectId id;
     @Required private ObjectId indExerciseId;
     @Required private ObjectId setId;
-    @Required private int sets;
-    @Required private int reps;
+    private int sets;
+    private int reps;
 
     public Exercise() {}
 

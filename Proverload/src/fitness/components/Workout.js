@@ -18,7 +18,12 @@ export default function Workout(props) {
     return(
         <View>
             {props.elements.map(element => {
-                return <ListedSets key={element.id} element={element}/>
+                return (
+                    <View key={element.id}>
+                        <ListedSets element={element}/>
+                        <Text>-------------------------</Text>
+                    </View>
+                ) 
             })}
         </View>
     );

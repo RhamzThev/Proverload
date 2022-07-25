@@ -62,15 +62,6 @@ const testState = {
     indExercises: indExercises,
 }
 
-// INITIAL STATE
-const initialState = {
-    regimes: null,
-    workouts: null,
-    sets: null,
-    exercises: null,
-    indExercises: null,
-}
-
 function readWorkoutByRegimeId(id) {
     return workouts.filter(workout => {
         return workout.regimeId == id;
@@ -116,6 +107,49 @@ function readIndExName(id){
     return indExercise.name;
 }
 
+export const createRegime = createAsyncThunk(
+    'fitness/createRegimeStatus',
+    async (action, thunkAPI) => {
+        await FitnessModule.createRegime(action.name)
+        return true
+    }
+)
+
+export const createWorkout = createAsyncThunk(
+    'fitness/createWorkoutStatus',
+    async (action, thunkAPI) => {
+        await FitnessModule.createWorkout(action.name, action.regimeId)
+        return true
+    }
+)
+
+export const selectRegime = createAsyncThunk(
+    'fitness/selectRegimeStatus',
+    async (action, thunkAPI) => {
+        var regime = await FitnessModule.readRegime(action.id)
+    }
+)
+
+export const selectWorkout = createAsyncThunk(
+    'fitness/selectWorkoutStatus',
+    async (action, thunkAPI) => {
+        var workout = await FitnessModule.readWorkout(action.id)
+    }
+)
+
+// READ X BY X ID FUNCTIONS
+
+
+// INITIAL STATE
+const initialState = {
+    regimes: null,
+    workouts: null,
+    sets: null,
+    exercises: null,
+    indExercises: null,
+}
+
+
 const fitnessSlice = createSlice({
     name: "fitness",
     initialState: testState,
@@ -126,8 +160,20 @@ const fitnessSlice = createSlice({
         selectWorkout(state, action) {
             var sets = readSetByWorkoutId(action.payload)
             state.sets = joinSets(sets);
-            // console.log(state.sets)
         }
+    },
+    extraReducers: {
+        [createRegime.fulfilled]: (state, action) => {
+            console.log("REGIME CREATED")
+        },
+
+        [createWorkout.fulfilled]: (state, action) => {
+            console.log("WORKOUT CREATED")
+        },
+
+        [selectRegime.fulfilled]: (state, action) => {},
+        [selectWorkout.fulfilled]: (state, action) => {},
+
     }
 })
 

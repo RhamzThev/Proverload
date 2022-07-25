@@ -59,7 +59,9 @@ public class MainApplication extends Application implements ReactApplication {
 
     RealmConfiguration configuration = new RealmConfiguration.Builder().name("Proverload").build();
     Realm.setDefaultConfiguration(configuration);
-    
+
+    // Realm.deleteRealm(configuration);
+
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
