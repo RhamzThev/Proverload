@@ -5,15 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { AuthModule } = NativeModules;
 
-const initialState = {
-    username: null,
-    name: null,
-    age: null,
-    weight: null,
-    height: null,
-    token: null,
-}
-
 async function getUserInfo(username) {
 
     return {
@@ -53,6 +44,16 @@ export const signUp = createAsyncThunk(
 
     }
 )
+
+// INITIAL STATE
+const initialState = {
+    username: null,
+    name: null,
+    age: null,
+    weight: null,
+    height: null,
+    token: null,
+}
 
 const authSlice = createSlice({
     name: "auth",
