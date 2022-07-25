@@ -2,10 +2,11 @@ package com.proverload.models.fitness;
 
 import org.bson.types.ObjectId;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class Regime {
+public class Regime extends RealmObject {
     @PrimaryKey
     private ObjectId id;
     @Required
